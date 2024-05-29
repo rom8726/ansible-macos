@@ -60,7 +60,47 @@
         name: google-chrome
         state: present
 
+    - name: Install Yandex Browser via cask
+      homebrew_cask:
+        name: yandex
+        state: present
+
+    - name: Install Yandex Disk via cask
+      homebrew_cask:
+        name: yandex-disk
+        state: present
+
     - name: Install Visual Studio Code via cask
       homebrew_cask:
         name: visual-studio-code
+        state: present
+
+    - name: Install JetBrains Toolbox via cask
+      homebrew_cask:
+        name: jetbrains-toolbox
+        state: present
+
+    - name: Install Sublime Text via cask
+      homebrew_cask:
+        name: sublime-text
+        state: present
+
+    - name: Install Lens via cask
+      homebrew_cask:
+        name: lens
+        state: present
+
+    # - name: Install Docker via cask
+    #   homebrew_cask:
+    #     name: docker
+    #     state: present
+
+    - name: Install Zoom via cask
+      homebrew_cask:
+        name: zoom
+        state: present
+
+    - name: Install Postman via cask
+      homebrew_cask:
+        name: postman
         state: present
