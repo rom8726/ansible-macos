@@ -1,0 +1,27 @@
+############################
+##       SETUP IDEs       ##
+############################
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install Visual Studio Code via cask
+      homebrew_cask:
+        name: visual-studio-code
+        state: present
+
+    - name: Install Sublime Text via cask
+      homebrew_cask:
+        name: sublime-text
+        state: present
+
+    - name: Install Lens via cask
+      homebrew_cask:
+        name: lens
+        state: present
+
+    - name: Install Postman via cask
+      homebrew_cask:
+        name: postman
+        state: present

@@ -1,0 +1,90 @@
+############################
+##       SETUP TOOLS      ##
+############################
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Create directory ~/bin
+      file:
+        path: "/Users/roman/bin"
+        state: directory
+        mode: '0755'
+    - name: Add ~/bin dir to PATH
+      lineinfile:
+        path: /Users/roman/.bash_profile
+        regexp: '^(export PATH=.*:/Users/roman/bin.*$|^export PATH=.*)$'
+        line: 'export PATH=$PATH:/Users/roman/bin'
+        insertafter: '^export PATH='
+      when: "'/Users/roman/bin' not in lookup('file', '/Users/roman/.bash_profile')"
+
+    - name: Install mc
+      homebrew:
+        name: mc
+        state: present
+
+    - name: Install ranger
+      homebrew:
+        name: ranger
+        state: present
+
+    - name: Ranger - enable image preview
+      ansible.builtin.lineinfile:
+        path: ~/.config/ranger/rc.conf
+        regexp: "{{ item.regexp }}"
+        line:   "{{ item.line }}"
+      loop:
+        - { regexp: '^set\ preview_images', line: 'set preview_images true' }
+        - { regexp: '^set\ preview_images_method', line: 'set preview_images_method iterm2' }
+
+    - name: Create symbolic link for ranger
+      file:
+        src: "/usr/local/bin/ranger"
+        path: "/Users/roman/bin/rg"
+        state: link
+
+    - name: Install htop
+      homebrew:
+        name: htop
+        state: present
+
+    - name: Install wget
+      homebrew:
+        name: wget
+        state: present
+
+    - name: Install curl
+      homebrew:
+        name: curl
+        state: present
+
+    - name: Install coreutils
+      homebrew:
+        name: coreutils
+        state: present
+
+    - name: Install python3
+      homebrew:
+        name: python3
+        state: present
+
+    - name: Install git
+      homebrew:
+        name: git
+        state: present
+
+    - name: Install pre-commit
+      homebrew:
+        name: pre-commit
+        state: present
+
+    - name: Install openssl
+      homebrew:
+        name: openssl
+        state: present
+
+    - name: Install imagemagick
+      homebrew:
+        name: imagemagick
+        state: present

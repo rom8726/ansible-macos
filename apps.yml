@@ -1,0 +1,22 @@
+############################
+##       SETUP APPs       ##
+############################
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install Google Chrome via cask
+      homebrew_cask:
+        name: google-chrome
+        state: present
+
+    - name: Install Yandex Browser via cask
+      homebrew_cask:
+        name: yandex
+        state: present
+
+    - name: Install Yandex Disk via cask
+      homebrew_cask:
+        name: yandex-disk
+        state: present

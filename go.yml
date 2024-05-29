@@ -1,0 +1,44 @@
+############################
+##      SETUP GOLANG      ##
+############################
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install go
+      homebrew:
+        name: go
+        state: present
+
+    - name: Add env var GOPRIVATE
+      lineinfile: dest=~/.bash_profile regexp=^GOPRIVATE= line="export GOPRIVATE="
+
+    - name: Add env var GOPROXY
+      lineinfile: dest=~/.bash_profile regexp=^GOPROXY= line="export GOPROXY=direct"
+
+    - name: Add env var GOSUMDB
+      lineinfile: dest=~/.bash_profile regexp=^GOSUMDB= line="export GOSUMDB=off"
+
+    - name: Create directory ~/go
+      file:
+        path: "/Users/roman/go"
+        state: directory
+        mode: '0755'
+
+    - name: Create directory ~/go/bin
+      file:
+        path: "/Users/roman/go/bin"
+        state: directory
+        mode: '0755'
+
+    - name: Add env var GOPATH
+      lineinfile: dest=~/.bash_profile regexp=^GOPATH= line="export GOPATH=$HOME/go"
+
+    - name: Add go bin dir to PATH
+      lineinfile:
+        path: /Users/roman/.bash_profile
+        regexp: '^(export PATH=.*:/Users/roman/go/bin.*$|^export PATH=.*)$'
+        line: 'export PATH=$PATH:/Users/roman/go/bin'
+        insertafter: '^export PATH='
+      when: "'/Users/roman/go/bin' not in lookup('file', '/Users/roman/.bash_profile')"

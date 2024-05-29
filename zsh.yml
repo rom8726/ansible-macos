@@ -1,0 +1,58 @@
+############################
+##       SETUP TOOLS      ##
+############################
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install zsh
+      homebrew:
+        name: zsh
+        state: present
+
+    - name: Install iterm2
+      homebrew:
+        name: iterm2
+        state: present
+
+    - name: Powerlevel10k - get source code
+      ansible.builtin.git:
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: ~/.powerlevel10k
+        update: yes
+
+    - name: Powerlevel10k - update .zshrc
+      ansible.builtin.lineinfile:
+        path: ~/.zshrc
+        regexp: '^source ~\/.powerlevel10k'
+        line: source ~/.powerlevel10k/powerlevel10k.zsh-theme
+        
+    - name: Powerlevel10k - copy config
+      ansible.builtin.copy:
+        src: zsh/.p10k.zsh
+        dest: ~/.p10k.zsh
+        mode: '0644'
+        
+    - name: Powerlevel10k - Update .zshrc
+      ansible.builtin.blockinfile:
+        path: ~/.zshrc
+        block: |
+          if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+            source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+          fi
+        insertbefore: BOF
+        marker_begin: "BEGIN Enable Powerlevel10k instant prompt"
+        marker_end: "END Powerlevel10k instant prompt"
+        backup: yes
+        create: yes
+
+    - name: Powerlevel10k - Update .zshrc
+      ansible.builtin.blockinfile:
+        path: ~/.zshrc_test
+        block: |
+          [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+        insertafter: EOF
+        marker_begin: "BEGIN Powerlevel10k config"
+        marker_end: "END Powerlevel10k config"
+        backup: yes
