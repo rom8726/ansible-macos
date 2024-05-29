@@ -20,6 +20,11 @@
         name: mc
         state: present
 
+    - name: Install ranger
+      homebrew:
+        name: ranger
+        state: present
+
     - name: Install htop
       homebrew:
         name: htop
