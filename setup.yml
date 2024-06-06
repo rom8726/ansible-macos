@@ -2,30 +2,14 @@
 ##      LOCAL MACOS      ##
 ###########################
 ---
-- hosts: localhost
-  connection: local
-  gather_facts: false
+- hosts: all
   tasks:
-    - name: Ensure Homebrew is installed
-      command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      args:
-        creates: /usr/local/bin/brew
+    - name: Set global variable username
+      set_fact:
+        username: "romanchudov"
 
-    - name: Ensure 'brew services' is tapped
-      homebrew_tap:
-        name: homebrew/services
-
-    - name: Include setup tools
-      import_playbook: tools.yml
-
-    - name: Include setup ZSH
-      import_playbook: zsh.yml
-
-    - name: Include setup go
-      import_playbook: go.yml
-
-    - name: Include setup apps
-      import_playbook: apps.yml
-
-    - name: Include setup IDEs
-      import_playbook: ides.yml
+- import_playbook: tools.yml
+- import_playbook: zsh.yml
+- import_playbook: go.yml
+- import_playbook: apps.yml
+- import_playbook: ides.yml

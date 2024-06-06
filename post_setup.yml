@@ -16,6 +16,6 @@
         name: homebrew/services
 
     - name: Install Docker Compose via cask
-      homebrew_cask:
+      homebrew:
         name: docker-compose
         state: present

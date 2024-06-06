@@ -8,16 +8,16 @@
   tasks:
     - name: Create directory ~/bin
       file:
-        path: "/Users/roman/bin"
+        path: "/Users/{{ username }}/bin"
         state: directory
         mode: '0755'
     - name: Add ~/bin dir to PATH
       lineinfile:
-        path: /Users/roman/.bash_profile
-        regexp: '^(export PATH=.*:/Users/roman/bin.*$|^export PATH=.*)$'
-        line: 'export PATH=$PATH:/Users/roman/bin'
+        path: /Users/{{ username }}/.bash_profile
+        regexp: '^(export PATH=.*:/Users/{{ username }}/bin.*$|^export PATH=.*)$'
+        line: 'export PATH=$PATH:/Users/{{ username }}/bin'
         insertafter: '^export PATH='
-      when: "'/Users/roman/bin' not in lookup('file', '/Users/roman/.bash_profile')"
+      when: "'/Users/{{ username }}/bin' not in lookup('file', '/Users/{{ username }}/.bash_profile')"
 
     - name: Install mc
       homebrew:
@@ -29,19 +29,19 @@
         name: ranger
         state: present
 
-    - name: Ranger - enable image preview
-      ansible.builtin.lineinfile:
-        path: ~/.config/ranger/rc.conf
-        regexp: "{{ item.regexp }}"
-        line:   "{{ item.line }}"
-      loop:
-        - { regexp: '^set\ preview_images', line: 'set preview_images true' }
-        - { regexp: '^set\ preview_images_method', line: 'set preview_images_method iterm2' }
+#    - name: Ranger - enable image preview
+#      ansible.builtin.lineinfile:
+#        path: ~/.config/ranger/rc.conf
+#        regexp: "{{ item.regexp }}"
+#        line:   "{{ item.line }}"
+#      loop:
+#        - { regexp: '^set\ preview_images', line: 'set preview_images true' }
+#        - { regexp: '^set\ preview_images_method', line: 'set preview_images_method iterm2' }
 
     - name: Create symbolic link for ranger
       file:
         src: "/usr/local/bin/ranger"
-        path: "/Users/roman/bin/rg"
+        path: "/Users/{{ username }}/bin/rg"
         state: link
 
     - name: Install htop
@@ -54,10 +54,10 @@
         name: wget
         state: present
 
-    - name: Install curl
-      homebrew:
-        name: curl
-        state: present
+#    - name: Install curl
+#      homebrew:
+#        name: curl
+#        state: present
 
     - name: Install coreutils
       homebrew:
@@ -69,10 +69,10 @@
         name: python3
         state: present
 
-    - name: Install git
-      homebrew:
-        name: git
-        state: present
+#    - name: Install git
+#      homebrew:
+#        name: git
+#        state: present
 
     - name: Install pre-commit
       homebrew:

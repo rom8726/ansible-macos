@@ -22,13 +22,13 @@
 
     - name: Create directory ~/go
       file:
-        path: "/Users/roman/go"
+        path: "/Users/{{ username }}/go"
         state: directory
         mode: '0755'
 
     - name: Create directory ~/go/bin
       file:
-        path: "/Users/roman/go/bin"
+        path: "/Users/{{ username }}/go/bin"
         state: directory
         mode: '0755'
 
@@ -37,8 +37,8 @@
 
     - name: Add go bin dir to PATH
       lineinfile:
-        path: /Users/roman/.bash_profile
-        regexp: '^(export PATH=.*:/Users/roman/go/bin.*$|^export PATH=.*)$'
-        line: 'export PATH=$PATH:/Users/roman/go/bin'
+        path: /Users/{{ username }}/.bash_profile
+        regexp: '^(export PATH=.*:/Users/{{ username }}/go/bin.*$|^export PATH=.*)$'
+        line: 'export PATH=$PATH:/Users/{{ username }}/go/bin'
         insertafter: '^export PATH='
-      when: "'/Users/roman/go/bin' not in lookup('file', '/Users/roman/.bash_profile')"
+      when: "'/Users/{{ username }}/go/bin' not in lookup('file', '/Users/{{ username }}/.bash_profile')"
