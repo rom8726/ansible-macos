@@ -43,6 +43,8 @@
         src: "/usr/local/bin/ranger"
         path: "/Users/{{ username }}/bin/rg"
         state: link
+    - name: Changing perm of "/Users/{{ username }}/bin/rg", adding "+x"
+      file: dest=/Users/{{ username }}/bin/rg mode=a+x
 
     - name: Install htop
       homebrew:
