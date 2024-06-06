@@ -1,0 +1,16 @@
+############################
+##      SETUP DOCKER      ##
+############################
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Install Docker via cask
+      homebrew_cask:
+        name: docker
+        state: present
+    - name: Install Docker Compose via cask
+      homebrew:
+        name: docker-compose
+        state: present

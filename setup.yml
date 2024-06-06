@@ -13,3 +13,4 @@
 - import_playbook: go.yml
 - import_playbook: apps.yml
 - import_playbook: ides.yml
+- import_playbook: docker.yml
