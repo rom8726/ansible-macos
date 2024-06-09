@@ -20,8 +20,3 @@
       homebrew_cask:
         name: yandex-disk
         state: present
-
-    - name: Install DropBox via cask
-      homebrew_cask:
-        name: dropbox
-        state: present
